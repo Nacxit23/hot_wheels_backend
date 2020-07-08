@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->double('price')->default(0.0);
             $table->foreignId('product_categories_id')->references('id')->on('products_categories')->onDelete('cascade');
             $table->id();
-            $table->integer('size');
+            $table->string('size');
             $table->string('body_type');
             $table->string('color')->comment('The color is a hexadecimal');
             $table->string('mark', 50);
