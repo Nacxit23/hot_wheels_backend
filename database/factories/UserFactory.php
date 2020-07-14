@@ -19,7 +19,6 @@ use Illuminate\Support\Str;
 
 $factory->define(User::class, function (Faker $faker) {
     $persons = \App\persons::pluck('id')->toArray();
-    $rols = \App\rols::pluck('id')->toArray();
 
     return [
         'name' => $faker->name,
@@ -27,7 +26,6 @@ $factory->define(User::class, function (Faker $faker) {
         'email_verified_at' => now(),
         'password' => $faker->password,// password
         'person_id' => $faker->randomElement($persons),
-        'rol_id' => $faker->randomElement($rols),
         'remember_token' => Str::random(10),
     ];
 });

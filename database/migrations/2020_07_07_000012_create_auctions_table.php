@@ -14,17 +14,19 @@ class CreateAuctionsTable extends Migration
     public function up()
     {
         Schema::create('auctions', function (Blueprint $table) {
-            $table->boolean('active');
-            $table->date('date');
+            $table->boolean('active')->default(1);
+            $table->dateTime('first_dateTime');
+            $table->dateTime('last_dateTime');
+            $table->double('tire_state')->nullable();
+            $table->foreignId('bidding_id')->references('id')->on('buddings')->onDelete('cascade');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreignId('type_pay_id')->references('id')->on('type_pays')->onDelete('cascade');
             $table->id();
-            $table->string('advertising');
             $table->string('category');
             $table->string('description');
             $table->string('name', 80);
-            $table->string('set_number');
             $table->string('url');
+            $table->text('detail')->nullable();
             $table->timestamps();
         });
     }

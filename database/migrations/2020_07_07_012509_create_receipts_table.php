@@ -14,6 +14,7 @@ class CreateReceiptsTable extends Migration
     public function up()
     {
         Schema::create('receipts', function (Blueprint $table) {
+            $table->boolean('active')->default(1);
             $table->double('individual_sum');
             $table->double('total_sum');
             $table->foreignId('auction_id')->references('id')->on('auctions')->onDelete('cascade');
