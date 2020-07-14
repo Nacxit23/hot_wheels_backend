@@ -18,6 +18,7 @@ class CreateReceiptsTable extends Migration
             $table->double('total_sum');
             $table->foreignId('auction_id')->references('id')->on('auctions')->onDelete('cascade');
             $table->foreignId('sells_id')->references('id')->on('sells')->onDelete('cascade')->nullable();
+            $table->foreignId('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->id();
             $table->string('rup-number');
             $table->timestamps();

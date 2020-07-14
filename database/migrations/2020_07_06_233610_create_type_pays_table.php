@@ -17,7 +17,7 @@ class CreateTypePaysTable extends Migration
             $table->boolean('active')->default(1);
             $table->id();
             $table->string('name', 80)->unique();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

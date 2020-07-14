@@ -15,7 +15,7 @@ class CreateSellsTable extends Migration
     {
         Schema::create('sells', function (Blueprint $table) {
             $table->boolean('active')->default(1);
-            $table->date('date');
+            $table->date('datetime');
             $table->double('total_price');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreignId('type_pay_id')->references('id')->on('type_pays')->onDelete('cascade');
