@@ -17,7 +17,7 @@ $factory->define(products::class, function (Faker $faker) {
         $fakerMarkName = 'Plymouth';
         $fakerNameProduct = 'sedan';
         $fakerBodyType = 'Metal';
-    }
+    }else
     if ($randomNumber === 2) {
         $fakerNameProduct = 'Explorer';
         $fakerMarkName = 'Ford Explorer';
@@ -36,7 +36,7 @@ $factory->define(products::class, function (Faker $faker) {
         $fakerNameProduct = 'sport';
         $fakerBodyType = 'Metal';
     }
-    if ($randomNumber === 4) {
+    if ($randomNumber === 5) {
         $fakerNameProduct = 'Porsche';
         $fakerMarkName = '934';
         $fakerNameProduct = 'sport';
