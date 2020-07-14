@@ -15,7 +15,6 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->boolean('active')->default(1);
-            $table->foreignId('auctions_id')->references('id')->on('auctions')->onDelete('cascade')->nullable();
             $table->foreignId('sells_id')->references('id')->on('sells')->onDelete('cascade')->nullable();
             $table->foreignId('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->id();

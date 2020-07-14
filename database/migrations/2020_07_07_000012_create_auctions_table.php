@@ -18,7 +18,6 @@ class CreateAuctionsTable extends Migration
             $table->dateTime('first_dateTime');
             $table->dateTime('last_dateTime');
             $table->double('tire_state')->nullable();
-            $table->foreignId('bidding_id')->references('id')->on('buddings')->onDelete('cascade');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreignId('type_pay_id')->references('id')->on('type_pays')->onDelete('cascade');
             $table->id();
