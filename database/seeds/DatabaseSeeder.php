@@ -18,5 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductsSeeder::class);
         $this->call(TypePaySeeder::class);
         $this->calL(SellsSeeder::class);
+        $this->calL(CommentsSeeder::class);
+        $this->calL(AuctionsSeeder::class);
+        $this->calL(BuddingsSeeder::class);
     }
 }
