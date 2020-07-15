@@ -20,6 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->calL(SellsSeeder::class);
         $this->calL(CommentsSeeder::class);
         $this->calL(auctionsSeeder::class);
-//        $this->calL(BuddingsSeeder::class);
+        $this->calL(BuddingSeeder::class);
     }
 }
