@@ -19,7 +19,6 @@ class CreateBuddingsTable extends Migration
             $table->double('price');
             $table->foreignId('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('auction_id')->references('id')->on('auctions')->onDelete('cascade');
-
             $table->id();
             $table->text('comments')->nullable();
             $table->timestamps();
