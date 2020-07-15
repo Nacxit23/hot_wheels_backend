@@ -5,10 +5,10 @@
 use App\comments;
 use Faker\Generator as Faker;
 
-$factory->define(comments::class, function (Faker $faker) {
+$factory->define(\App\Models\comments::class, function (Faker $faker) {
 
-    $users = \App\User::pluck('id')->toArray();
-    $sells = \App\sells::pluck('id')->toArray();
+    $users = \App\Models\User::pluck('id')->toArray();
+    $sells = \App\Models\sells::pluck('id')->toArray();
     return [
         'users_id' => $faker->randomElement($users),
         'sells_id' => $faker->randomElement($sells),

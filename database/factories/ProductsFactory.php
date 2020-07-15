@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\products;
+use App\Models\products;
 use Faker\Generator as Faker;
 
 $factory->define(products::class, function (Faker $faker) {
@@ -42,7 +42,7 @@ $factory->define(products::class, function (Faker $faker) {
         $fakerNameProduct = 'sport';
         $fakerBodyType = 'Metal';
     }
-    $productCategorie = \App\products_categorie::pluck('id')->toArray();
+    $productCategorie = \App\Models\products_categorie::pluck('id')->toArray();
 
     return [
         'date' => $faker->date($format = 'Y-m-d', $max = 'now'),
