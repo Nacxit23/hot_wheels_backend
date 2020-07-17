@@ -1,0 +1,18 @@
+type Product {
+    id: ID! @globalId
+    date: Date!
+    price: Int!
+    size: String!
+    bodyType: String! @rename(attribute:"body_type")
+    color: String!
+    mark: String!
+    name: String!
+    type: String!
+    productsCategories: Products_categorie! @belongsTo
+    auctions: [Auction!]! @hasMany(type: "connection")
+    sells: [Sell!]! @hasMany(type: "connection")
+}
+
+extend type Query {
+    products: [Product!]! @field(resolver:"App\\GraphQL\\Queries\\Product\\productQuery@__invoke")
+}

@@ -1,0 +1,10 @@
+type Person {
+    id: ID! @globalId
+    genre: String!
+    dateBirth: Date! @rename(attribute:"date_birth")
+    city: String!
+    firstName: String! @rename(attribute:"first_name")
+    identification: String!
+    lastName: String! @rename(attribute:"last_name")
+    users: [User!]! @hasMany(type: "connection")
+}

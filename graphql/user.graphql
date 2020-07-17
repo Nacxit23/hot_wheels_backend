@@ -1,5 +1,12 @@
 type User {
     id: ID! @globalId
+    person: Person! @belongsTo
+    rol: Rol! @belongsTo
+    auctions: [Auction!]! @belongsToMany(type: "connection")
+    comments:[Comment!]! @hasMany(type: "connection")
+    buddings: [Budding!]! @hasMany(type: "connection")
+    sells: [Sell!]! @hasMany(type: "connection")
+    receipts: [Receipt!]! @hasMany(type: "connection")
     name: String!
     email: String!
 }
@@ -7,3 +14,4 @@ type User {
 extend type Query {
     users: [User!]! @field(resolver:"App\\GraphQL\\Queries\\User\\UserQuery@__invoke")
 }
+

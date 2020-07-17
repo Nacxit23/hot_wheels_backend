@@ -1,0 +1,11 @@
+type Budding {
+    id: ID! @globalId
+    dateBudding: DateTime!
+    price: Int!
+    user: User! @belongsTo
+    auction: Auction! @belongsTo
+}
+
+extend type Query {
+    buddings: [Budding!]! @field(resolver:"App\\GraphQL\\Queries\\Budding\\buddingQuery@__invoke")
+}
