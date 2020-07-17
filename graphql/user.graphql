@@ -1,0 +1,9 @@
+type User {
+    id: ID! @globalId
+    name: String!
+    email: String!
+}
+
+extend type Query {
+    users: [User!]! @field(resolver:"App\\GraphQL\\Queries\\User\\UserQuery@__invoke")
+}
