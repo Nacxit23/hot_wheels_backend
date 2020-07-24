@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
             $table->string('identification')->unique();
             $table->string('last_name', 80);
             $table->string('name')->virtualAs('CONCAT(first_name, " ", last_name)');
-            $table->integer("phone_number");
+            $table->string("phone_number");
             $table->string("address");
             $table->timestamps();
         });

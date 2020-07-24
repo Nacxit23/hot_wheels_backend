@@ -18,14 +18,19 @@ use Illuminate\Support\Str;
 */
 
 $factory->define(User::class, function (Faker $faker) {
-    $persons = \App\Models\persons::pluck('id')->toArray();
-
     return [
-        'name' => $faker->name,
+        'nameUser' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => $faker->password,// password
-        'person_id' => $faker->randomElement($persons),
-        'remember_token' => Str::random(10),
+        'token' => Str::random(10),
+        'genre' => $faker->randomLetter,
+        'date_birth' => $faker->date($format = 'Y-m-d', $max = 'now'),
+        'city' => $faker->city,
+        'first_name' => $faker->firstName,
+        'identification' => $faker->unique()->uuid,
+        'last_name' => $faker->lastName,
+        'phone_number' => $faker->phoneNumber,
+        'address' => $faker->address
     ];
 });
