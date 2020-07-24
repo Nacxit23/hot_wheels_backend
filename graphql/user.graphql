@@ -1,17 +1,42 @@
 type User {
     id: ID! @globalId
-    person: Person! @belongsTo
     rol: Rol! @belongsTo
     auctions: [Auction!]! @belongsToMany(type: "connection")
     comments:[Comment!]! @hasMany(type: "connection")
     buddings: [Budding!]! @hasMany(type: "connection")
     sells: [Sell!]! @hasMany(type: "connection")
     receipts: [Receipt!]! @hasMany(type: "connection")
-    name: String!
+    nameUser: String!
     email: String!
+    genre: String!
+    dateBirth: Date! @rename(attribute:"date_birth")
+    city: String!
+    firstName: String! @rename(attribute:"first_name")
+    identification: String!
+    lastName: String! @rename(attribute:"last_name")
+    name: String!
+    address: String!
+    phoneNumber: String @rename(attirbute:"phone_number")
 }
 
 extend type Query {
     users: [User!]! @field(resolver:"App\\GraphQL\\Queries\\User\\UserQuery@__invoke")
 }
 
+input CreateUser {
+    nameUser: String!
+    email: String!
+    genre: String!
+    city: String!
+    firstName: String!
+    identification: String!
+    lastName: String!
+    password: String!
+    rol: ID!
+    address: String!
+    phoneNumber: String!
+}
+
+extend type Mutation {
+    createUser(input: CreateUser!): User @field(resolver: "App\\GraphQL\\Mutations\\User\\UserCreate@__invoke")
+}

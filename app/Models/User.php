@@ -16,7 +16,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'person_id', 'active'
+        'nameUser', 'email', 'password', 'active', 'genre', 'date_birth', 'city', 'first_name',
+        'identification', 'last_name', 'name', "address", "phone_number"
     ];
 
     /**
@@ -36,14 +37,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function person()
-    {
-        return $this->belongsTo(persons::class);
-    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

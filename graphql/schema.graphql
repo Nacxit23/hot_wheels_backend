@@ -8,7 +8,6 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 scalar DateTimeTz @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTimeTz")
 
 #import rol.graphql
-#import person.graphql
 #import user.graphql
 #import products_categorie.graphql
 #import product.graphql
