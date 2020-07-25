@@ -1,7 +1,7 @@
 type Rol {
     id: ID! @globalId
     name: String!
-    users: [User!]! @hasMany(type: "connection")
+    users: [User!]! @belongsToMany(type: "connection")
 }
 
 extend type Query {

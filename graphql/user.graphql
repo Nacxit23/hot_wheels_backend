@@ -1,6 +1,6 @@
 type User {
     id: ID! @globalId
-    rol: Rol! @belongsTo
+    rols: [Rol!]! @belongsToMany(type: "connection")
     auctions: [Auction!]! @belongsToMany(type: "connection")
     comments:[Comment!]! @hasMany(type: "connection")
     buddings: [Budding!]! @hasMany(type: "connection")
@@ -16,7 +16,7 @@ type User {
     lastName: String! @rename(attribute:"last_name")
     name: String!
     address: String!
-    phoneNumber: String @rename(attirbute:"phone_number")
+    phoneNumber: String @rename(attribute:"phone_number")
 }
 
 extend type Query {
