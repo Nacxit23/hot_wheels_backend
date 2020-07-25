@@ -21,9 +21,9 @@ class UserCreate
         $allrols = rols::all();
         $decodeId = new GlobalId();
 
-        $rol = $allrols->find('id', $decodeId->decodeID($input["rol"]));
+        $rolId = $allrols->find('id', $decodeId->decodeID($input["rol"]));
         throw_unless(
-            $rol,
+            $rolId,
             UserError::class,
             "El rol solicitado no existe"
         );
@@ -34,8 +34,7 @@ class UserCreate
         } while (User::where('token', $token)->exists());
 
         $date = date("Y-m-d");
-
-        return User::create([
+        $user = User::create([
             'nameUser' => $input['nameUser'],
             'email' => $input['email'],
             'token' => $token,
@@ -46,7 +45,12 @@ class UserCreate
             'identification' => $input['identification'],
             'last_name' => $input['lastName'],
             'password' => bcrypt($input['password']),
-            'rol' => $rol
+            'phone_number' => $input['phoneNumber'],
+            'address' => $input['address'],
         ]);
+        logger($rolId);
+        $user->rols()->attach($rolId);
+
+        return $user;
     }
 }
