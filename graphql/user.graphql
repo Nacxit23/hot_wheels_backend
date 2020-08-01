@@ -1,42 +1,129 @@
 type User {
-    id: ID! @globalId
-    rols: [Rol!]! @belongsToMany(type: "connection")
-    auctions: [Auction!]! @belongsToMany(type: "connection")
-    comments:[Comment!]! @hasMany(type: "connection")
-    buddings: [Budding!]! @hasMany(type: "connection")
-    sells: [Sell!]! @hasMany(type: "connection")
-    receipts: [Receipt!]! @hasMany(type: "connection")
-    nameUser: String!
-    email: String!
-    genre: String!
-    dateBirth: Date! @rename(attribute:"date_birth")
-    city: String!
-    firstName: String! @rename(attribute:"first_name")
-    identification: String!
-    lastName: String! @rename(attribute:"last_name")
-    name: String!
     address: String!
-    phoneNumber: String @rename(attribute:"phone_number")
+    auctions: [Auction!]! @belongsToMany(type: "connection")
+    buddings: [Budding!]! @hasMany(type: "connection")
+    city: String!
+    comments: [Comment!]! @hasMany(type: "connection")
+    dateBirth: Date! @rename(attribute: "date_birth")
+    email: String!
+    firstName: String! @rename(attribute: "first_name")
+    genre: String!
+    id: ID! @globalId
+    identification: String!
+    lastName: String! @rename(attribute: "last_name")
+    name: String!
+    nameUser: String!
+    phoneNumber: String @rename(attribute: "phone_number")
+    receipts: [Receipt!]! @hasMany(type: "connection")
+    rols: [Rol!]! @belongsToMany(type: "connection")
+    sells: [Sell!]! @hasMany(type: "connection")
 }
 
 extend type Query {
-    users: [User!]! @field(resolver:"App\\GraphQL\\Queries\\User\\UserQuery@__invoke")
+    users: [User!]!
+        @field(resolver: "App\\GraphQL\\Queries\\User\\UserQuery@__invoke")
 }
 
 input CreateUser {
     nameUser: String!
+        @rules(
+            apply: ["unique:users,nameUser", "required"]
+            messages: {
+                unique: "El nombre de usuario tiene que ser unico."
+                required: "El campo es requerido."
+            }
+        )
     email: String!
+        @rules(
+            apply: ["unique:users,email", "email", "required"]
+            messages: {
+                unique: "El correo electronico tiene que ser unico."
+                email: "El campo tiene que ser un correo"
+                required: "El campo es requerido."
+            }
+        )
     genre: String!
+        @rules(
+            apply: ["max: 1", "required"]
+            messages: {
+                max: "Solo puede ingresar un caracter."
+                required: "El campo es requerido."
+            }
+        )
     city: String!
+        @rules(
+            apply: ["string", "required"]
+            messages: {
+                string: "El campo no tiene que contener digitos."
+                required: "El campo es requerido."
+            }
+        )
     firstName: String!
+        @rules(
+            apply: ["string", "required"]
+            messages: {
+                string: "El campo no tiene que contener digitos."
+                required: "El campo es requerido."
+            }
+        )
     identification: String!
+        @rules(
+            apply: ["min: 14", "required"]
+            messages: {
+                regex: "La cedula de identidad tiene que ser válida."
+                min: "La cedula tiene que tener un tamaño adecuado."
+                required: "El campo es requerido."
+            }
+        )
     lastName: String!
+        @rules(
+            apply: ["required"]
+            messages: { required: "El campo es requerido." }
+        )
     password: String!
+        @rules(
+            apply: ["required"]
+            messages: { required: "El campo es requerido." }
+        )
+    dateBirth: Date!
     rol: ID!
     address: String!
+        @rules(
+            apply: ["required"]
+            messages: { required: "El campo es requerido." }
+        )
     phoneNumber: String!
+}
+input AddNewRol {
+    id: ID!
+    rol: ID!
+}
+#
+type LoginResponse {
+    token: String!
+}
+
+input Login {
+    nameUser: String!
+    password: String!
+}
+
+extend type Query {
+    me: User @middleware(checks: ["auth:api"]) @auth
+}
+
+extend type Mutation @middleware(checks: ["admin"]) {
+    createAdmin(id: ID!): User
+        @field(resolver: "App\\GraphQL\\Mutations\\User\\CreateAdmin@__invoke")
 }
 
 extend type Mutation {
-    createUser(input: CreateUser!): User @field(resolver: "App\\GraphQL\\Mutations\\User\\UserCreate@__invoke")
+    createUser(input: CreateUser!): User
+        @field(resolver: "App\\GraphQL\\Mutations\\User\\UserCreate@__invoke")
+    addNewRol(input: AddNewRol!): User
+        @field(
+            resolver: "App\\GraphQL\\Mutations\\User\\NewRolMutation@__invoke"
+        )
+    login(input: Login!): LoginResponse!
+        @field(resolver: "App\\GraphQL\\Mutations\\User\\Login@__invoke")
 }

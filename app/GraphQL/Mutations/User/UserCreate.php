@@ -30,14 +30,13 @@ class UserCreate
 
         do {
             $token = Str::random(80);
-
-        } while (User::where('token', $token)->exists());
+        } while (User::where('api_token', $token)->exists());
 
         $date = date("Y-m-d");
         $user = User::create([
             'nameUser' => $input['nameUser'],
             'email' => $input['email'],
-            'token' => $token,
+            'api_token' => $token,
             'genre' => $input['genre'],
             'date_birth' => $date,
             'city' => $input['city'],
@@ -48,7 +47,6 @@ class UserCreate
             'phone_number' => $input['phoneNumber'],
             'address' => $input['address'],
         ]);
-        logger($rolId);
         $user->rols()->attach($rolId);
 
         return $user;

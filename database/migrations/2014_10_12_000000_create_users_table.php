@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('nameUser')->unique();
             $table->string('password');
-            $table->string('token', 80)->unique();
+            $table->string('api_token', 80)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->char('genre', 1);
             $table->date('date_birth');

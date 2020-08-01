@@ -26,6 +26,6 @@ class CreateRolUserPivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rol_user');
+        Schema::dropIfExists('rols_user');
     }
 }

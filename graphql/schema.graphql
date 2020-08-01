@@ -17,11 +17,3 @@ scalar DateTimeTz @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Da
 #import budding.graphql
 #import receipt.graphql
 #import comment.graphql
-
-type Query {
-    dummy: String
-}
-
-type Mutation {
-    dummy: String
-}
