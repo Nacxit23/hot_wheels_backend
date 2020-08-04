@@ -112,7 +112,7 @@ extend type Query {
     me: User @middleware(checks: ["auth:api"]) @auth
 }
 
-extend type Mutation @middleware(checks: ["admin"]) {
+extend type Mutation @middleware(checks: ["auth","admin"]) {
     createAdmin(id: ID!): User
         @field(resolver: "App\\GraphQL\\Mutations\\User\\CreateAdmin@__invoke")
 }
