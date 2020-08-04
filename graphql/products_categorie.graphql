@@ -1,0 +1,6 @@
+type Products_categorie{
+    id: ID! @globalId
+    name: String!
+    description: String!
+    products: [Product!]! @hasMany(type: "connection")
+}

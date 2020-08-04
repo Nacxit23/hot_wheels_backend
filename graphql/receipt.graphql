@@ -1,0 +1,13 @@
+type Receipt {
+    id: ID! @globalId
+    individualSum: Int! @rename(attribute:"individual_sum")
+    totalSum: String! @rename(attribute:"total_sum")
+    rupNumber: String! @rename(attribute:"rup-number")
+    auction: Auction! @belongsTo
+    sell: Sell! @belongsTo
+    user: User! @belongsTo
+}
+
+extend type Query {
+    receipts: [Receipt!]! @field(resolver:"App\\GraphQL\\Queries\\Receipt\\receiptQuery@__invoke")
+}

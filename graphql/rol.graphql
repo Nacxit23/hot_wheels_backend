@@ -1,0 +1,9 @@
+type Rol {
+    id: ID! @globalId
+    name: String!
+    users: [User!]! @belongsToMany(type: "connection")
+}
+
+extend type Query {
+    rols: [Rol!]! @field(resolver:"App\\GraphQL\\Queries\\Rol\\rolQuery@__invoke")
+}

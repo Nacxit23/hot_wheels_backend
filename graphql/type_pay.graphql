@@ -1,0 +1,11 @@
+type Type_pay {
+    id: ID! @globalId
+    name: String!
+    text: String
+    sells: [Sell!]! @hasMany(type: "connection")
+    users: [Auction!]! @hasMany(type: "connection")
+}
+
+extend type Type_pay {
+    type_pays: [Type_pay!]! @field(resolver:"App\\GraphQL\\Queries\\Type_pay\\type_payQuery@__invoke")
+}

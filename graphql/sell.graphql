@@ -1,0 +1,16 @@
+type Sell {
+    id: ID! @globalId
+    datetime: DateTime!,
+    tireState: Int! @rename(attribute: "tire_state")
+    voucher: String!
+    detail: String
+    user: User! @belongsTo
+    type_pay: Type_pay! @belongsTo
+    product: Product! @belongsTo
+    receipts: [Receipt!]! @hasMany(type: "connection")
+    comments: [Comment!]! @hasMany(type: "connection")
+}
+
+extend type Query {
+    sells: [Sell!]! @field(resolver:"App\\GraphQL\\Queries\\Sell\\sellQuery@__invoke")
+}
