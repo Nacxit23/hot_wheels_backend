@@ -33,6 +33,7 @@ class UserCreate
         } while (User::where('api_token', $token)->exists());
 
         $date = date("Y-m-d");
+
         $user = User::create([
             'nameUser' => $input['nameUser'],
             'email' => $input['email'],

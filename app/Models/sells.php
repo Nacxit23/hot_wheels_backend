@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class sells extends Model
 {
@@ -12,11 +13,9 @@ class sells extends Model
     protected $fillable = [
         'active',
         'datetime',
-        'tire_state',
         'product_id',
         'type_pay_id',
-        'users_id',
-        'voucher',
+        'user_id',
         'detail'
     ];
 
@@ -58,5 +57,20 @@ class sells extends Model
     public function comments()
     {
         return $this->hasMany(comments::class);
+    }
+
+    public function scopeDaySells($query, $args)
+    {
+        logger($args);
+
+        if ($args['status'] === "DAY") {
+            return $query->where('datetime', '>=', now()->subDay());
+        }
+        if ($args['status'] === "WEEK") {
+            return $query->where('datetime', '>=', now()->subWeek());
+        }
+        if ($args['status'] === "MONTH") {
+            return $query->where('datetime', '>=', now()->subMonth());
+        }
     }
 }

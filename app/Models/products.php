@@ -13,22 +13,16 @@ class products extends Model
         'active',
         'date',
         'price',
-        'product_categories_id',
+        'productCategories_id',
         'size',
         'body_type',
         'color',
         'mark',
         'name',
-        'type'
+        'type',
+        'category',
+        'user_id'
     ];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function products_categorie()
-    {
-        return $this->belongsTo(products_categorie::class);
-    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -44,5 +38,10 @@ class products extends Model
     public function sells()
     {
         return $this->hasMany(sells::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

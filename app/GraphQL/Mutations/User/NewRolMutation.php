@@ -30,14 +30,16 @@ class NewRolMutation
         $rol = $user->rols()->find($decodeId->decodeID($input["rol"]));
         $admin = $user->rols()->where("id", $decodeId->decodeID($input["rol"]));
 
+
         throw_if(
             $rol,
             UserError::class,
             'El usuario ya tiene este rol.'
         );
 
+        $adminVerification = 1;
         throw_if(
-            $admin,
+            $admin === $adminVerification,
             UserError::class,
             'El usuario no puede ser admin.'
         );

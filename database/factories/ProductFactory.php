@@ -17,13 +17,13 @@ $factory->define(products::class, function (Faker $faker) {
         $fakerMarkName = 'Plymouth';
         $fakerNameProduct = 'sedan';
         $fakerBodyType = 'Metal';
-    }else
-    if ($randomNumber === 2) {
-        $fakerNameProduct = 'Explorer';
-        $fakerMarkName = 'Ford Explorer';
-        $fakerNameProduct = 'SUV';
-        $fakerBodyType = 'Metal';
-    }
+    } else
+        if ($randomNumber === 2) {
+            $fakerNameProduct = 'Explorer';
+            $fakerMarkName = 'Ford Explorer';
+            $fakerNameProduct = 'SUV';
+            $fakerBodyType = 'Metal';
+        }
     if ($randomNumber === 3) {
         $fakerNameProduct = 'Jeep';
         $fakerMarkName = 'Jeep Wragler';
@@ -42,17 +42,19 @@ $factory->define(products::class, function (Faker $faker) {
         $fakerNameProduct = 'sport';
         $fakerBodyType = 'Metal';
     }
-    $productCategorie = \App\Models\products_categorie::pluck('id')->toArray();
+
+    $users = \App\Models\User::pluck('id')->toArray();
 
     return [
         'date' => $faker->date($format = 'Y-m-d', $max = 'now'),
         'price' => $faker->randomNumber(3),
-        'product_categories_id' => $faker->randomElement($productCategorie),
         'size' => '1/64',
         'body_type' => $fakerBodyType,
         'color' => $faker->hexColor,
         'mark' => $fakerMarkName,
         'name' => $fakerNameProduct,
-        'type' => $fakerNameProduct
+        'type' => $fakerNameProduct,
+        'user_id' => $faker->randomElement($users),
     ];
 });
+

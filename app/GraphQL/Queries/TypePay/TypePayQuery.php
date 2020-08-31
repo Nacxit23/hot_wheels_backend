@@ -1,14 +1,14 @@
 <?php
 
-namespace App\GraphQL\Queries\Type_pay;
+namespace App\GraphQL\Queries\TypePay;
 
 use App\Models\type_pay;
 
-class type_payQuery
+class TypePayQuery
 {
     /**
-     * @param  null  $_
-     * @param  array<string, mixed>  $args
+     * @param null $_
+     * @param array<string, mixed> $args
      */
     public function __invoke($_, array $args)
     {

@@ -6,6 +6,9 @@ type Type_pay {
     users: [Auction!]! @hasMany(type: "connection")
 }
 
-extend type Type_pay {
-    type_pays: [Type_pay!]! @field(resolver:"App\\GraphQL\\Queries\\Type_pay\\type_payQuery@__invoke")
+extend type Query {
+    typePays: [Type_pay!]!
+        @field(
+            resolver: "App\\GraphQL\\Queries\\TypePay\\TypePayQuery@__invoke"
+        )
 }

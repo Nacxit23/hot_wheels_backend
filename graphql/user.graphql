@@ -17,6 +17,7 @@ type User {
     receipts: [Receipt!]! @hasMany(type: "connection")
     rols: [Rol!]! @belongsToMany(type: "connection")
     sells: [Sell!]! @hasMany(type: "connection")
+    products: [Product!]! @hasMany(type: "connection")
 }
 
 extend type Query {
@@ -112,7 +113,7 @@ extend type Query {
     me: User @middleware(checks: ["auth:api"]) @auth
 }
 
-extend type Mutation @middleware(checks: ["auth","admin"]) {
+extend type Mutation @middleware(checks: ["auth", "admin"]) {
     createAdmin(id: ID!): User
         @field(resolver: "App\\GraphQL\\Mutations\\User\\CreateAdmin@__invoke")
 }

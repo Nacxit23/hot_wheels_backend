@@ -7,11 +7,13 @@ use App\Models\sells;
 class sellQuery
 {
     /**
-     * @param  null  $_
-     * @param  array<string, mixed>  $args
+     * @param null $_
+     * @param array<string, mixed> $args
      */
-    public function __invoke($_, array $args)
+    public function __invoke($_)
     {
-        return sells::all();
+        $sells = sells::where("active", 1)->orderBy('datetime', 'desc')->get();
+
+        return $sells;
     }
 }
