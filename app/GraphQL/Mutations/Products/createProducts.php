@@ -2,10 +2,9 @@
 
 namespace App\GraphQL\Mutations\Products;
 
-use App\Models\product_categories;
 use App\Models\products;
 use GraphQL\Error\UserError;
-use Nuwave\Lighthouse\Execution\Utils\GlobalId;
+use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 class createProducts
 {
@@ -13,13 +12,16 @@ class createProducts
      * @param null $_
      * @param array<string, mixed> $args
      */
-    public function __invoke($_, array $args)
+    public function __invoke($_, array $args, GraphQLContext $context)
     {
 
         $input = $args["input"];
 
         $size = $this->determineSize($input['size']);
 
+        $userId = $context->user()->id;
+
+        logger($userId);
         throw_if(
             $input["price"] <= 0,
             UserError::class,
@@ -36,7 +38,8 @@ class createProducts
             'name' => $input['name'],
             'price' => $input['price'],
             'size' => $size,
-            'type' => $input['type']
+            'type' => $input['type'],
+            'user_id' => $userId,
         ]);
 
         return $newProduct;
@@ -44,7 +47,6 @@ class createProducts
 
     public function determineSize($size)
     {
-        logger($size);
         $scaleSize = array('1/18', '1/24', '1/32', '1/43', '1/64', '1/87');
 
         switch ($size) {

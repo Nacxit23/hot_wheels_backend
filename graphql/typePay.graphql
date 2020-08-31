@@ -7,5 +7,5 @@ type Type_pay {
 }
 
 extend type Type_pay {
-    type_pays: [Type_pay!]! @field(resolver:"App\\GraphQL\\Queries\\Type_pay\\type_payQuery@__invoke")
+    typePays: [Type_pay!]! @field(resolver:"App\\GraphQL\\Queries\\TypePay\\TypePayQuery@__invoke")
 }
