@@ -43,6 +43,8 @@ $factory->define(products::class, function (Faker $faker) {
         $fakerBodyType = 'Metal';
     }
 
+    $users = \App\Models\User::pluck('id')->toArray();
+
     return [
         'date' => $faker->date($format = 'Y-m-d', $max = 'now'),
         'price' => $faker->randomNumber(3),
@@ -51,6 +53,8 @@ $factory->define(products::class, function (Faker $faker) {
         'color' => $faker->hexColor,
         'mark' => $fakerMarkName,
         'name' => $fakerNameProduct,
-        'type' => $fakerNameProduct
+        'type' => $fakerNameProduct,
+        'user_id' => $faker->randomElement($users),
     ];
 });
+

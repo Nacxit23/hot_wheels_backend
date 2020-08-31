@@ -20,7 +20,8 @@ class products extends Model
         'mark',
         'name',
         'type',
-        'category'
+        'category',
+        'user_id'
     ];
 
     /**
@@ -37,5 +38,10 @@ class products extends Model
     public function sells()
     {
         return $this->hasMany(sells::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

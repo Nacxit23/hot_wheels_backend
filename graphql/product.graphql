@@ -11,59 +11,60 @@ type Product {
     sells: [Sell!]! @hasMany(type: "connection")
     size: String!
     type: String!
+    user: User! @belongsTo
 }
 
 extend type Query {
     products: [Product!]!
-    @field(
-        resolver: "App\\GraphQL\\Queries\\Product\\productQuery@__invoke"
-    )
+        @field(
+            resolver: "App\\GraphQL\\Queries\\Product\\productQuery@__invoke"
+        )
 }
 
 input CreateProduct {
     bodyType: String!
-    @rules(
-        apply: ["required"]
-        messages: { required: "El campo es requerido." }
-    )
+        @rules(
+            apply: ["required"]
+            messages: { required: "El campo es requerido." }
+        )
     color: String!
-    @rules(
-        apply: ["required"]
-        messages: { required: "El campo es requerido." }
-    )
+        @rules(
+            apply: ["required"]
+            messages: { required: "El campo es requerido." }
+        )
     date: Date!
-    @rules(
-        apply: ["required"]
-        messages: { required: "El campo es requerido." }
-    )
+        @rules(
+            apply: ["required"]
+            messages: { required: "El campo es requerido." }
+        )
     mark: String!
-    @rules(
-        apply: ["required"]
-        messages: { required: "El campo es requerido." }
-    )
+        @rules(
+            apply: ["required"]
+            messages: { required: "El campo es requerido." }
+        )
     name: String!
-    @rules(
-        apply: ["required"]
-        messages: { required: "El campo es requerido." }
-    )
+        @rules(
+            apply: ["required"]
+            messages: { required: "El campo es requerido." }
+        )
     price: Int!
-    @rules(
-        apply: ["numeric", "required"]
-        messages: {
-            required: "El campo es requerido."
-            numeric: "El campo tiene que ser numerico."
-        }
-    )
+        @rules(
+            apply: ["numeric", "required"]
+            messages: {
+                required: "El campo es requerido."
+                numeric: "El campo tiene que ser numerico."
+            }
+        )
     size: String!
-    @rules(
-        apply: ["required"]
-        message: { required: "El campo es requerido." }
-    )
+        @rules(
+            apply: ["required"]
+            message: { required: "El campo es requerido." }
+        )
     type: String!
-    @rules(
-        apply: ["required"]
-        messages: { required: "El campo es requerido." }
-    )
+        @rules(
+            apply: ["required"]
+            messages: { required: "El campo es requerido." }
+        )
     category: String
 }
 
@@ -73,10 +74,10 @@ input UpdateProduct {
     mark: String
     name: String
     price: Int
-    @rules(
-        apply: ["numeric"]
-        messages: { numeric: "El campo tiene que ser numerico." }
-    )
+        @rules(
+            apply: ["numeric"]
+            messages: { numeric: "El campo tiene que ser numerico." }
+        )
     size: String
     type: String
     category: String
@@ -85,12 +86,13 @@ input UpdateProduct {
 
 extend type Mutation @middleware(checks: ["auth", "seller"]) {
     createProduct(input: CreateProduct): Product!
-    @field(
-        resolver: "App\\GraphQL\\Mutations\\Products\\createProducts@__invoke"
-    )
+        @field(
+            resolver: "App\\GraphQL\\Mutations\\Products\\createProducts@__invoke"
+        )
     updateProduct(input: UpdateProduct): Product!
-    @field(
-        resolver: "App\\GraphQL\\Mutations\\Products\\updateProduct@__invoke"
-    )
-    deleteProduct(id: ID!): Product @delete(globalId: true, model:"App\\Models\\products")
+        @field(
+            resolver: "App\\GraphQL\\Mutations\\Products\\updateProduct@__invoke"
+        )
+    deleteProduct(id: ID!): Product
+        @delete(globalId: true, model: "App\\Models\\products")
 }

@@ -24,7 +24,9 @@ class CreateProductsTable extends Migration
             $table->string('mark', 50);
             $table->string('name', 80);
             $table->string('type');
+            $table->double('tire_state')->nullable();
             $table->string("category")->default("Toy coleccion");
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
