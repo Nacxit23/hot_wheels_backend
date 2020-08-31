@@ -12,7 +12,7 @@ scalar DateTimeTz
 #import rol.graphql
 #import user.graphql
 #import product.graphql
-#import type_pay.graphql
+#import typePay.graphql
 #import sell.graphql
 #import auction.graphql
 #import budding.graphql
