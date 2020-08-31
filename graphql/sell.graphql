@@ -1,8 +1,7 @@
 type Sell {
     id: ID! @globalId
-    datetime: DateTime!,
+    datetime: DateTime!
     tireState: Int! @rename(attribute: "tire_state")
-    voucher: String!
     detail: String
     user: User! @belongsTo
     type_pay: Type_pay! @belongsTo
@@ -11,6 +10,43 @@ type Sell {
     comments: [Comment!]! @hasMany(type: "connection")
 }
 
-extend type Query {
-    sells: [Sell!]! @field(resolver:"App\\GraphQL\\Queries\\Sell\\sellQuery@__invoke")
+enum filterList {
+    DAY
+    WEEK
+    MONTH
+}
+
+extend type Query @middleware(checks: ["auth", "seller"]) {
+    sells(status: filterList): [Sell!]!
+    @field(
+        scopes: ["daySells"]
+        resolver: "App\\GraphQL\\Queries\\Sell\\sellQuery@__invoke"
+    )
+    findSell(name: String!): [Sell!]!
+    @field(resolver: "App\\GraphQL\\Queries\\Sell\\findSell@__invoke")
+}
+
+input CreateSell {
+    detail: String
+    @rules(
+        apply: ["required"]
+        messages: { required: "El campo detalle es requerido." }
+    )
+    idProduct: ID!
+    @rules(
+        apply: ["required"]
+        messages: { required: "El producto es requerido." }
+    )
+    idTypePay: ID!
+    @rules(
+        apply: ["required"]
+        messages: { required: "El tipo de pago es requerido." }
+    )
+}
+
+extend type Mutation @middleware(checks: ["auth", "seller"]) {
+    createSell(input: CreateSell): Sell!
+    @field(resolver: "App\\GraphQL\\Mutations\\Sell\\createSell@__invoke")
+    sellOut(id: ID!): Sell!
+    @field(resolver: "App\\GraphQL\\Mutations\\Sell\\sellOut@__invoke")
 }

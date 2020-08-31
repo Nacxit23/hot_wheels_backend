@@ -13,7 +13,6 @@ $factory->define(sells::class, function (Faker $faker) {
         'datetime' => $faker->dateTimeThisDecade(),
         'product_id' => $faker->randomElement($product),
         'type_pay_id' => 3,
-        'users_id' => 4,
-        'voucher' => $faker->ean8
+        'user_id' => 4,
     ];
 });
