@@ -1,14 +1,25 @@
 type Type_pay {
     id: ID! @globalId
     name: String!
-    text: String
     sells: [Sell!]! @hasMany(type: "connection")
+    text: String
     users: [Auction!]! @hasMany(type: "connection")
+}
+
+input addTypePay {
+    name: String!
+    @rules(apply: ["required"], messages: { required: "Campo es requerido." })
+    text: String
 }
 
 extend type Query {
     typePays: [Type_pay!]!
-        @field(
-            resolver: "App\\GraphQL\\Queries\\TypePay\\TypePayQuery@__invoke"
-        )
+    @field(resolver: "App\\GraphQL\\Queries\\TypePay\\TypePayQuery@__invoke")
+}
+
+extend type Mutation @middleware(checks: ["auth", "admin"]) {
+    createpay(input: addTypePay! @spread): Type_pay
+    @create(model: "App\\Models\\type_pay")
+
+    detelePay(id: ID!): Type_pay @field(resolver: "App\\GraphQL\\Mutations\\TypePay\\updatePay")
 }
