@@ -14,7 +14,8 @@ class comments extends Model
         'date_budding',
         'price',
         'users_id',
-        'auction_id'
+        'comment',
+        'sells_id'
     ];
 
     /**
@@ -22,7 +23,7 @@ class comments extends Model
      */
     public function sell()
     {
-        return $this->belongsTo(sells::class);
+        return $this->belongsTo(sells::class,"sells_id");
     }
 
     /**
@@ -30,8 +31,6 @@ class comments extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,"users_id");
     }
-
-
 }

@@ -13,6 +13,6 @@ $factory->define(comments::class, function (Faker $faker) {
     return [
         'users_id' => $faker->randomElement($users),
         'sells_id' => $faker->randomElement($sells),
-        'comments' => $faker->text
+        'comment' => $faker->text
     ];
 });

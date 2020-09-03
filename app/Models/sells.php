@@ -61,8 +61,6 @@ class sells extends Model
 
     public function scopeDaySells($query, $args)
     {
-        logger($args);
-
         if ($args['status'] === "DAY") {
             return $query->where('datetime', '>=', now()->subDay());
         }

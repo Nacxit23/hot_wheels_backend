@@ -18,7 +18,7 @@ class CreateCommentsTable extends Migration
             $table->foreignId('sells_id')->references('id')->on('sells')->onDelete('cascade')->nullable();
             $table->foreignId('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->id();
-            $table->text('comments');
+            $table->text('comment');
             $table->timestamps();
         });
     }
