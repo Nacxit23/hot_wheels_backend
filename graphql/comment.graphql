@@ -1,10 +1,28 @@
 type Comment {
     id: ID! @globalId
-    comments: String!
+    comment: String!
     sell: Sell! @belongsTo
     user: User! @belongsTo
 }
 
 extend type Query {
-    comments: [Comment!]! @field(resolver:"App\\GraphQL\\Queries\\Comment\\commentQuery@__invoke")
+    comments: [Comment!]!
+    @field(resolver: "App\\GraphQL\\Queries\\Comment\\commentQuery")
+}
+
+input comment {
+    comment: String!
+    @rules(
+        apply: ["required", "min:50"]
+        messages: {
+            required: "El comentario es requerido."
+            min: "El commentario tiene que tener un minimo de palabra"
+        }
+    )
+    sellId: ID!
+}
+
+extend type Mutation {
+    createComments(input: comment!): Comment
+    @field(resolver: "App\\GraphQL\\Mutations\\Comment\\create")
 }
