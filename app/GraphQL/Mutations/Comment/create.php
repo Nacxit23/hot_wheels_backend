@@ -20,11 +20,9 @@ class create
 
         $userId = $context->user()->id;
 
-
         $globalId = new GlobalId();
 
         $sell = sells::find($globalId->decodeID($input["sellId"]));
-        logger($userId);
 
         throw_unless(
             $sell,
@@ -32,9 +30,8 @@ class create
             "La venta no funciona"
         );
 
-        return comments::create([
+        return $sell->comments()->create([
             'users_id' => $userId,
-            'sells_id' => $sell->id,
             'comment' => $input["comment"]
         ]);
     }
