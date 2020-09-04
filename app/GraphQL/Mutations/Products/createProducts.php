@@ -21,7 +21,6 @@ class createProducts
 
         $userId = $context->user()->id;
 
-        logger($userId);
         throw_if(
             $input["price"] <= 0,
             UserError::class,
