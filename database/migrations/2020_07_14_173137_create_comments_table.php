@@ -13,12 +13,16 @@ class CreateCommentsTable extends Migration
      */
     public function up()
     {
+        date_default_timezone_set("America/Managua");
+
         Schema::create('comments', function (Blueprint $table) {
             $table->boolean('active')->default(1);
             $table->foreignId('sells_id')->references('id')->on('sells')->onDelete('cascade')->nullable();
             $table->foreignId('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->id();
             $table->text('comment');
+            $table->dateTime("commentTime")->default(date('Y-m-d H:i:s'))->nullable();
+            $table->string("state")->nullable();
             $table->timestamps();
         });
     }
