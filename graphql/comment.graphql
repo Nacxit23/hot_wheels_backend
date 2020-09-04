@@ -3,6 +3,7 @@ type Comment {
     comment: String!
     sell: Sell! @belongsTo
     user: User! @belongsTo
+    commentTime: DateTime!
 }
 
 extend type Query {
@@ -13,7 +14,7 @@ extend type Query {
 input comment {
     comment: String!
     @rules(
-        apply: ["required", "min:50"]
+        apply: ["required", "min:10"]
         messages: {
             required: "El comentario es requerido."
             min: "El commentario tiene que tener un minimo de palabra"
@@ -21,8 +22,25 @@ input comment {
     )
     sellId: ID!
 }
+input updateComment {
+    comment: String!
+    @rules(
+        apply: ["required", "min:10"]
+        messages: {
+            required: "El comentario es requerido."
+            min: "El commentario tiene que tener un minimo de palabra"
+        })
+    commentID: ID!
+}
 
-extend type Mutation {
+extend type Mutation @middleware(checks: ["auth"]) {
     createComments(input: comment!): Comment
     @field(resolver: "App\\GraphQL\\Mutations\\Comment\\create")
+
+    updateComments(input: updateComment!): Comment
+    @field(resolver: "App\\GraphQL\\Mutations\\Comment\\update")
+
+    deleteComments(id: ID!): Comment!
+    @field(resolver: "App\\GraphQL\\Mutations\\Comment\\delete")
 }
+
