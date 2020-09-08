@@ -13,31 +13,26 @@ $factory->define(products::class, function (Faker $faker) {
     $randomNumber = rand(1, 5);
 
     if ($randomNumber === 1) {
-        $fakerNameProduct = 'Fury';
         $fakerMarkName = 'Plymouth';
         $fakerNameProduct = 'sedan';
         $fakerBodyType = 'Metal';
     } else
         if ($randomNumber === 2) {
-            $fakerNameProduct = 'Explorer';
             $fakerMarkName = 'Ford Explorer';
             $fakerNameProduct = 'SUV';
             $fakerBodyType = 'Metal';
         }
     if ($randomNumber === 3) {
-        $fakerNameProduct = 'Jeep';
         $fakerMarkName = 'Jeep Wragler';
         $fakerNameProduct = 'SUV';
         $fakerBodyType = 'Metal';
     }
     if ($randomNumber === 4) {
-        $fakerNameProduct = 'Cobra';
         $fakerMarkName = 'Cheby';
         $fakerNameProduct = 'sport';
         $fakerBodyType = 'Metal';
     }
     if ($randomNumber === 5) {
-        $fakerNameProduct = 'Porsche';
         $fakerMarkName = '934';
         $fakerNameProduct = 'sport';
         $fakerBodyType = 'Metal';
@@ -53,8 +48,11 @@ $factory->define(products::class, function (Faker $faker) {
         'color' => $faker->hexColor,
         'mark' => $fakerMarkName,
         'name' => $fakerNameProduct,
-        'type' => $fakerNameProduct,
         'user_id' => $faker->randomElement($users),
+        'type_category' => 'basic',
+        'type_tire' => 'rubber',
+        'Series' => 'premium',
+        'url' => $faker->url
     ];
 });
 

@@ -23,10 +23,11 @@ class CreateProductsTable extends Migration
             $table->string('color')->comment('The color is a hexadecimal');
             $table->string('mark', 50);
             $table->string('name', 80);
-            $table->string('type');
-            $table->double('tire_state')->nullable();
-            $table->string("category")->default("Toy coleccion");
+            $table->string('type_category');
+            $table->string('type_tire')->nullable();
+            $table->string("Series")->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('url');
             $table->timestamps();
         });
     }

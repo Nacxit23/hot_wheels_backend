@@ -19,9 +19,11 @@ class products extends Model
         'color',
         'mark',
         'name',
-        'type',
-        'category',
-        'user_id'
+        'user_id',
+        'url',
+        'Series',
+        'type_tire',
+        'type_category'
     ];
 
     /**

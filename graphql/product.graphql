@@ -1,7 +1,6 @@
 type Product {
     auctions: [Auction!]! @hasMany(type: "connection")
     bodyType: String! @rename(attribute: "body_type")
-    category: String!
     color: String!
     date: Date!
     id: ID! @globalId
@@ -10,62 +9,79 @@ type Product {
     price: Int!
     sells: [Sell!]! @hasMany(type: "connection")
     size: String!
-    type: String!
+    url: String!
+    typeCategory: String! @rename(attribute: "type_category")
+    typeTire: String! @rename(attribute: "type_tire")
+    Series: String!
     user: User! @belongsTo
 }
 
 extend type Query {
     products: [Product!]!
-        @field(
-            resolver: "App\\GraphQL\\Queries\\Product\\productQuery@__invoke"
-        )
+    @field(
+        resolver: "App\\GraphQL\\Queries\\Product\\productQuery@__invoke"
+    )
 }
 
 input CreateProduct {
     bodyType: String!
-        @rules(
-            apply: ["required"]
-            messages: { required: "El campo es requerido." }
-        )
+    @rules(
+        apply: ["required"]
+        messages: { required: "El campo es requerido." }
+    )
     color: String!
-        @rules(
-            apply: ["required"]
-            messages: { required: "El campo es requerido." }
-        )
+    @rules(
+        apply: ["required"]
+        messages: { required: "El campo es requerido." }
+    )
     date: Date!
-        @rules(
-            apply: ["required"]
-            messages: { required: "El campo es requerido." }
-        )
+    @rules(
+        apply: ["required"]
+        messages: { required: "El campo es requerido." }
+    )
     mark: String!
-        @rules(
-            apply: ["required"]
-            messages: { required: "El campo es requerido." }
-        )
+    @rules(
+        apply: ["required"]
+        messages: { required: "El campo es requerido." }
+    )
     name: String!
-        @rules(
-            apply: ["required"]
-            messages: { required: "El campo es requerido." }
-        )
+    @rules(
+        apply: ["required"]
+        messages: { required: "El campo es requerido." }
+    )
     price: Int!
-        @rules(
-            apply: ["numeric", "required"]
-            messages: {
-                required: "El campo es requerido."
-                numeric: "El campo tiene que ser numerico."
-            }
-        )
+    @rules(
+        apply: ["numeric", "required"]
+        messages: {
+            required: "El campo es requerido."
+            numeric: "El campo tiene que ser numerico."
+        }
+    )
     size: String!
-        @rules(
-            apply: ["required"]
-            message: { required: "El campo es requerido." }
-        )
-    type: String!
-        @rules(
-            apply: ["required"]
-            messages: { required: "El campo es requerido." }
-        )
-    category: String
+    @rules(
+        apply: ["required"]
+        message: { required: "El campo es requerido." }
+    )
+    url: String!
+    @rules(
+        apply: ["required"]
+        message: { required: "El campo es requerido." }
+    )
+    typeCategory: String!
+    @rules(
+        apply: ["required"]
+        message: { required: "El campo es requerido." }
+    )
+    typeTire: String!
+    @rules(
+        apply: ["required"]
+        message: { required: "El campo es requerido." }
+    )
+    Series: String!
+    @rules(
+        apply: ["required"]
+        message: { required: "El campo es requerido." }
+    )
 }
 
 input UpdateProduct {
@@ -74,25 +90,27 @@ input UpdateProduct {
     mark: String
     name: String
     price: Int
-        @rules(
-            apply: ["numeric"]
-            messages: { numeric: "El campo tiene que ser numerico." }
-        )
+    @rules(
+        apply: ["numeric"]
+        messages: { numeric: "El campo tiene que ser numerico." }
+    )
     size: String
-    type: String
-    category: String
     id: ID!
+    url: String!
+    typeCategory: String!
+    typeTire: String!
+    Series: String!
 }
 
 extend type Mutation @middleware(checks: ["auth", "seller"]) {
     createProduct(input: CreateProduct): Product!
-        @field(
-            resolver: "App\\GraphQL\\Mutations\\Products\\createProducts@__invoke"
-        )
+    @field(
+        resolver: "App\\GraphQL\\Mutations\\Products\\createProducts@__invoke"
+    )
     updateProduct(input: UpdateProduct): Product!
-        @field(
-            resolver: "App\\GraphQL\\Mutations\\Products\\updateProduct@__invoke"
-        )
+    @field(
+        resolver: "App\\GraphQL\\Mutations\\Products\\updateProduct@__invoke"
+    )
     deleteProduct(id: ID!): Product
-        @delete(globalId: true, model: "App\\Models\\products")
+    @delete(globalId: true, model: "App\\Models\\products")
 }

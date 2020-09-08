@@ -29,6 +29,9 @@ class createProducts
 
         $date = date("Y-m-d");
 
+        $typeCategory = $this->validateTypeCategory($input['typeCategory']);
+        $typeTire = $this->validateTypeTire($input['typeTire']);
+
         $newProduct = products::create([
             'body_type' => $input['bodyType'],
             'color' => $input['color'],
@@ -36,8 +39,11 @@ class createProducts
             'mark' => $input['mark'],
             'name' => $input['name'],
             'price' => $input['price'],
+            'type_category' => $typeCategory,
+            'type_tire' => $typeTire,
             'size' => $size,
-            'type' => $input['type'],
+            "url" => $input['url'],
+            'Series' => $input['Series'],
             'user_id' => $userId,
         ]);
 
@@ -75,6 +81,35 @@ class createProducts
 
             default :
                 throw  new UserError("El producto no conside con ningún tamaño existente. ");
+        }
+    }
+
+    public function validateTypeCategory($category)
+    {
+
+        $categoryArray = array('Juguetes científicos', 'Juguetes de colección', 'Juguetes de construcción',
+            'juguetes eléctricos', 'Juguetes ópticos‎ ', 'Juguetes de malabares',
+            'Mascotas virtuales', 'Juguetes mecánicos', 'Muñecas',
+            'Osos de peluche', 'Juguetes típicos', 'Títeres y marionetas', 'Vehículos de juguete');
+
+        if (in_array($category, $categoryArray)) {
+
+            return $category;
+        } else {
+            throw new UserError("La categoria ingresada no funciona 😪");
+        }
+    }
+
+    public function validateTypeTire($tire)
+    {
+
+        $typeTire = array('Goma', 'Plastico');
+
+        if (in_array($tire, $typeTire)) {
+
+            return $tire;
+        } else {
+            throw new UserError("EL tipo de llanta no existe 😪");
         }
     }
 }

@@ -28,7 +28,7 @@ class updateProduct
         );
 
         $allParam = array($input['bodyType'], $input['color'], $input['mark'], $input['name'],
-            $input['price'], $input['type'], $input['category']);
+            $input['price'], $input['typeTire'], $input['typeCategory'], $input['url'], $input['Series']);
 
         $confirmNullAttribute = $this->confirmAttribute($allParam, $product);
 
@@ -49,8 +49,8 @@ class updateProduct
             "body_type" => $confirmNullAttribute['bodyType'],
             "mark" => $confirmNullAttribute['mark'],
             "name" => $confirmNullAttribute['name'],
-            "type" => $confirmNullAttribute['type'],
-            "category" => $confirmNullAttribute['category']
+            "typeTire" => $confirmNullAttribute['typeTire'],
+            "typeCategory" => $confirmNullAttribute['typeCategory']
         ]);
 
         return $productUpdate;
@@ -98,20 +98,35 @@ class updateProduct
 
         }
         if ($attributes[5] === null || $attributes[5] === "") {
-            $type = $product->type;
-            $newAttributes['type'] = $type;
+            $typeTire = $product->typeTire;
+            $newAttributes['typeTire'] = $typeTire;
 
         } else {
             $newAttributes['type'] = $attributes[5];
 
         }
         if ($attributes[6] === null || $attributes[6] === "") {
-            $category = $product->category;
-            $newAttributes['category'] = $category;
+            $typeCategory = $product->typeCategory;
+            $newAttributes['typeCategory'] = $typeCategory;
         } else {
-            $newAttributes['category'] = $attributes[6];
+            $newAttributes['typeCategory'] = $attributes[6];
 
         }
+        if ($attributes[7] === null || $attributes[7] === "") {
+            $url = $product->url;
+            $newAttributes['url'] = $url;
+        } else {
+            $newAttributes['url'] = $attributes[7];
+
+        }
+        if ($attributes[8] === null || $attributes[8] === "") {
+            $Series = $product->url;
+            $newAttributes['Series'] = $Series;
+        } else {
+            $newAttributes['Series'] = $attributes[8];
+
+        }
+
         return $newAttributes;
     }
 }
