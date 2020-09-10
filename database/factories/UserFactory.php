@@ -21,7 +21,6 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         'nameUser' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
         'password' => $faker->password,// password
         'api_token' => Str::random(80),
         'genre' => $faker->randomLetter,
@@ -31,6 +30,8 @@ $factory->define(User::class, function (Faker $faker) {
         'identification' => $faker->unique()->uuid,
         'last_name' => $faker->lastName,
         'phone_number' => $faker->phoneNumber,
-        'address' => $faker->address
+        'address' => $faker->address,
+        'code_verification' => Str::random(50),
+
     ];
 });

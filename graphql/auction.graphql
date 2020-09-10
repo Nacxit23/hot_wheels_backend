@@ -3,10 +3,7 @@ type Auction {
     firstDateTime: DateTime! @rename(attribute: "first_dateTime")
     lastDateTime: DateTime! @rename(attribute: "last_dateTime")
     tireState: Int! @rename(attribute: "tire_state")
-    category: String!
     description: String!
-    name: String!
-    url: String!
     detail: String
     product: Product! @belongsTo
     type_pay: Type_pay! @belongsTo
@@ -17,5 +14,24 @@ type Auction {
 }
 
 extend type Query {
-    auction: [Auction!]! @field(resolver:"App\\GraphQL\\Queries\\Auction\\auctionQuery@__invoke")
+    auction: [Auction!]! @field(resolver:"App\\GraphQL\\Queries\\Auction\\auctionQuery")
+}
+
+input CreateAuction {
+    description: String!
+    @rules(
+        apply: ["required"]
+        message: { required: "El campo es requerido." }
+    )
+    detail: String
+    @rules(
+        apply: ["required"]
+        message: { required: "El campo es requerido." }
+    )
+    productId: ID!
+    typePayId: ID!
+}
+
+extend type Mutation {
+    createAuction(input: CreateAuction!): Auction! @field(resolver:"App\\GraphQL\\Mutations\\Auction\\create")
 }
