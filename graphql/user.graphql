@@ -69,11 +69,12 @@ input CreateUser {
         )
     identification: String!
         @rules(
-            apply: ["min: 14", "required"]
+            apply: ["min: 14", "required","unique:users,identification"]
             messages: {
                 regex: "La cedula de identidad tiene que ser válida."
                 min: "La cedula tiene que tener un tamaño adecuado."
                 required: "El campo es requerido."
+                unique: "La cedula de identidad tiene que ser unico"
             }
         )
     lastName: String!
@@ -94,6 +95,7 @@ input CreateUser {
             messages: { required: "El campo es requerido." }
         )
     phoneNumber: String!
+    code_verification: String!
 }
 input AddNewRol {
     id: ID!

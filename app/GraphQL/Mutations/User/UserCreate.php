@@ -24,7 +24,10 @@ class UserCreate
         $allrols = rols::all();
         $decodeId = new GlobalId();
 
+
         $rolId = $allrols->find('id', $decodeId->decodeID($input["rol"]));
+
+
         throw_unless(
             $rolId,
             UserError::class,
@@ -38,7 +41,7 @@ class UserCreate
 
         $date = date("Y-m-d");
 
-        $verificationCode = str::random(50);
+        $input['code_verification'] = str::random(8);
 
         $user = User::create([
             'nameUser' => $input['nameUser'],
@@ -53,13 +56,13 @@ class UserCreate
             'password' => bcrypt($input['password']),
             'phone_number' => $input['phoneNumber'],
             'address' => $input['address'],
-            'code_verification' => $verificationCode
+            'code_verification' => $input['code_verification']
         ]);
 
         $user->rols()->attach($rolId);
 
-        Mail::send('mails.verification', $verificationCode, function ($message) use ($user) {
-            $message->to($user['nameUser'], $user['nameUser'])->subject('Por favor confirma tu correo');
+        Mail::send('mails.verification', $input, function ($message) use ($input) {
+            $message->to($input['email'], $input['nameUser'], $input['code_verification']);
         });
 
         return $user;
