@@ -59,8 +59,6 @@ class createSell
             'detail' => $input['detail']
         ])->refresh();
 
-        logger($sell);
-
         return $sell;
     }
 }
