@@ -7,8 +7,8 @@ use Faker\Generator as Faker;
 
 $factory->define(buddings::class, function (Faker $faker) {
 
-    $auctions = \App\Models\auction::find(1);
-    $users = $auctions->users;
+    $users = \App\Models\sells::pluck('id')->toArray();
+
 
     return [
         'date_budding' => $faker->dateTime,
