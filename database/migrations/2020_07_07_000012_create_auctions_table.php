@@ -17,9 +17,10 @@ class CreateAuctionsTable extends Migration
             $table->boolean('active')->default(1);
             $table->dateTime('first_dateTime');
             $table->dateTime('last_dateTime')->nullable();
-            $table->double('auctions_state')->nullable();
+            $table->string('auctions_state')->nullable();
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreignId('type_pay_id')->references('id')->on('type_pays')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->id();
             $table->string('description');
             $table->text('detail')->nullable();

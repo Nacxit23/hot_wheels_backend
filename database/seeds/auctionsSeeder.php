@@ -18,7 +18,7 @@ class auctionsSeeder extends Seeder
             'product_id' => 1,
             'type_pay_id' => 3,
             'description' => 'The cars is in good stated',
+            'user_id' => 3
         ]);
-        $auctions->users()->attach(User::all());
     }
 }

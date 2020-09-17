@@ -2,12 +2,12 @@ type Auction {
     id: ID! @globalId
     firstDateTime: DateTime! @rename(attribute: "first_dateTime")
     lastDateTime: DateTime! @rename(attribute: "last_dateTime")
-    tireState: Int! @rename(attribute: "tire_state")
+    auctionsState: Int! @rename(attribute: "auctions_state")
     description: String!
     detail: String
     product: Product! @belongsTo
     type_pay: Type_pay! @belongsTo
-    users: [User!]! @hasMany(type: "connection")
+    user: User! @belongsTo
     buddings: [Budding!]! @hasMany(type: "connection")
     receipts: [Receipt!]! @hasMany(type: "connection")
 
@@ -18,18 +18,22 @@ extend type Query {
 }
 
 input CreateAuction {
-    description: String!
-    @rules(
-        apply: ["required"]
-        message: { required: "El campo es requerido." }
-    )
-    detail: String
-    @rules(
-        apply: ["required"]
-        message: { required: "El campo es requerido." }
-    )
     productId: ID!
-    typePayId: ID!
+    typeId: ID!
+    description: String!  @rules(
+        apply: ["required", "min:10"]
+        messages: {
+            required: "La descripcion es requerido."
+            min: "La descripcion tiene que tener un minimo de palabra"
+        })
+    detail: String!
+    @rules(
+        apply: ["required", "min:10"]
+        messages: {
+            required: "La descripcion es requerido."
+            min: "La descripcion tiene que tener un minimo de palabra"
+        })
+
 }
 
 extend type Mutation {
