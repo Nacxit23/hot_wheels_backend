@@ -19,18 +19,17 @@ class Login
         $imput = $args["input"];
 
         $user = User::where("nameUser", $imput["nameUser"])->first();
-        logger($user);
-
-        throw_unless(
-            $user->verification,
-            UserError::class,
-            'El usuario no ha sido verificado.'
-        );
 
         throw_unless(
             $athetication,
             UserError::class,
             'La contraseña y el nombre de usuario no pertenece a ningún usuario.'
+        );
+
+        throw_unless(
+            $user->verification,
+            UserError::class,
+            'El usuario no ha sido verificado.'
         );
 
         $user = Auth::guard("web")->user();
