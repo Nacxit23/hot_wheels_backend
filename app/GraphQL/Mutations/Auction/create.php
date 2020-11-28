@@ -37,7 +37,7 @@ class create
             UserError::class,
             "Producto no admitido"
         );
-        
+
         throw_unless(
             $product->active,
             UserError::class,

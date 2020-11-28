@@ -13,8 +13,10 @@ type Auction {
 
 }
 
-extend type Query {
+extend type Query @middleware(checks: ["auth","seller"])  {
     auction: [Auction!]! @field(resolver:"App\\GraphQL\\Queries\\Auction\\auctionQuery")
+    findAuction(name: String!): [Auction!]! @field(resolver:"App\\GraphQL\\Queries\\Auction\\findAuction")
+
 }
 
 input CreateAuction {
@@ -33,9 +35,8 @@ input CreateAuction {
             required: "La descripcion es requerido."
             min: "La descripcion tiene que tener un minimo de palabra"
         })
-
 }
 
-extend type Mutation {
+extend type Mutation @middleware(checks: ["auth","seller"])  {
     createAuction(input: CreateAuction!): Auction! @field(resolver:"App\\GraphQL\\Mutations\\Auction\\create")
 }
