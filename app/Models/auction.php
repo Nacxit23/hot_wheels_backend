@@ -13,15 +13,13 @@ class auction extends Model
     protected $fillable = [
         'first_dateTime',
         'last_dateTime',
-        'tire_state',
         'product_id',
         'type_pay_id',
-        'category',
         'description',
-        'name',
-        'url',
         'detail',
-        'active'
+        'active',
+        'user_id',
+        'auctions_state'
     ];
 
     /**
@@ -41,11 +39,11 @@ class auction extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function users()
+    public function user()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
     /**

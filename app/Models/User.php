@@ -17,7 +17,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'nameUser', 'email', 'password', 'active', 'genre', 'date_birth', 'city', 'first_name',
-        'identification', 'last_name', 'name', "address", "phone_number", 'api_token'
+        'identification', 'last_name', 'name', "address", "phone_number", 'api_token', 'code_verification', 'verification'
     ];
 
     /**
@@ -49,10 +49,6 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function auctions()
-    {
-        return $this->belongsToMany(auction::class);
-    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -86,8 +82,19 @@ class User extends Authenticatable
         return $this->hasMany(receipts::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function products()
     {
         return $this->hasMany(products::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function auctions()
+    {
+        return $this->hasMany(auction::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Mutations\User;
 
+use App\Models\User;
 use GraphQL\Error\UserError;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,10 +15,21 @@ class Login
     public function __invoke($_, array $args)
     {
         $athetication = Auth::guard("web")->attempt($args["input"]);
+
+        $imput = $args["input"];
+
+        $user = User::where("nameUser", $imput["nameUser"])->first();
+
         throw_unless(
             $athetication,
             UserError::class,
             'La contraseña y el nombre de usuario no pertenece a ningún usuario.'
+        );
+
+        throw_unless(
+            $user->verification,
+            UserError::class,
+            'El usuario no ha sido verificado.'
         );
 
         $user = Auth::guard("web")->user();

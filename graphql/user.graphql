@@ -1,6 +1,5 @@
 type User {
     address: String!
-    auctions: [Auction!]! @belongsToMany(type: "connection")
     buddings: [Budding!]! @hasMany(type: "connection")
     city: String!
     comments: [Comment!]! @hasMany(type: "connection")
@@ -18,81 +17,83 @@ type User {
     rols: [Rol!]! @belongsToMany(type: "connection")
     sells: [Sell!]! @hasMany(type: "connection")
     products: [Product!]! @hasMany(type: "connection")
+    auction: [Auction!]! @hasMany(type:"connection")
 }
 
 extend type Query {
     users: [User!]!
-        @field(resolver: "App\\GraphQL\\Queries\\User\\UserQuery@__invoke")
+    @field(resolver: "App\\GraphQL\\Queries\\User\\UserQuery@__invoke")
 }
 
 input CreateUser {
     nameUser: String!
-        @rules(
-            apply: ["unique:users,nameUser", "required"]
-            messages: {
-                unique: "El nombre de usuario tiene que ser unico."
-                required: "El campo es requerido."
-            }
-        )
+    @rules(
+        apply: ["unique:users,nameUser", "required"]
+        messages: {
+            unique: "El nombre de usuario tiene que ser unico."
+            required: "El campo es requerido."
+        }
+    )
     email: String!
-        @rules(
-            apply: ["unique:users,email", "email", "required"]
-            messages: {
-                unique: "El correo electronico tiene que ser unico."
-                email: "El campo tiene que ser un correo"
-                required: "El campo es requerido."
-            }
-        )
+    @rules(
+        apply: ["unique:users,email", "email", "required"]
+        messages: {
+            unique: "El correo electronico tiene que ser unico."
+            email: "El campo tiene que ser un correo"
+            required: "El campo es requerido."
+        }
+    )
     genre: String!
-        @rules(
-            apply: ["max: 1", "required"]
-            messages: {
-                max: "Solo puede ingresar un caracter."
-                required: "El campo es requerido."
-            }
-        )
+    @rules(
+        apply: ["max: 1", "required"]
+        messages: {
+            max: "Solo puede ingresar un caracter."
+            required: "El campo es requerido."
+        }
+    )
     city: String!
-        @rules(
-            apply: ["string", "required"]
-            messages: {
-                string: "El campo no tiene que contener digitos."
-                required: "El campo es requerido."
-            }
-        )
+    @rules(
+        apply: ["string", "required"]
+        messages: {
+            string: "El campo no tiene que contener digitos."
+            required: "El campo es requerido."
+        }
+    )
     firstName: String!
-        @rules(
-            apply: ["string", "required"]
-            messages: {
-                string: "El campo no tiene que contener digitos."
-                required: "El campo es requerido."
-            }
-        )
+    @rules(
+        apply: ["string", "required"]
+        messages: {
+            string: "El campo no tiene que contener digitos."
+            required: "El campo es requerido."
+        }
+    )
     identification: String!
-        @rules(
-            apply: ["min: 14", "required"]
-            messages: {
-                regex: "La cedula de identidad tiene que ser válida."
-                min: "La cedula tiene que tener un tamaño adecuado."
-                required: "El campo es requerido."
-            }
-        )
+    @rules(
+        apply: ["min: 14", "required","unique:users,identification"]
+        messages: {
+            regex: "La cedula de identidad tiene que ser válida."
+            min: "La cedula tiene que tener un tamaño adecuado."
+            required: "El campo es requerido."
+            unique: "La cedula de identidad tiene que ser unico"
+        }
+    )
     lastName: String!
-        @rules(
-            apply: ["required"]
-            messages: { required: "El campo es requerido." }
-        )
+    @rules(
+        apply: ["required"]
+        messages: { required: "El campo es requerido." }
+    )
     password: String!
-        @rules(
-            apply: ["required"]
-            messages: { required: "El campo es requerido." }
-        )
+    @rules(
+        apply: ["required"]
+        messages: { required: "El campo es requerido." }
+    )
     dateBirth: Date!
     rol: ID!
     address: String!
-        @rules(
-            apply: ["required"]
-            messages: { required: "El campo es requerido." }
-        )
+    @rules(
+        apply: ["required"]
+        messages: { required: "El campo es requerido." }
+    )
     phoneNumber: String!
 }
 input AddNewRol {
@@ -115,16 +116,17 @@ extend type Query {
 
 extend type Mutation @middleware(checks: ["auth", "admin"]) {
     createAdmin(id: ID!): User
-        @field(resolver: "App\\GraphQL\\Mutations\\User\\CreateAdmin@__invoke")
+    @field(resolver: "App\\GraphQL\\Mutations\\User\\CreateAdmin@__invoke")
+    addNewRol(input: AddNewRol!): User
+    @field(
+        resolver: "App\\GraphQL\\Mutations\\User\\NewRolMutation@__invoke"
+    )
 }
 
 extend type Mutation {
     createUser(input: CreateUser!): User
-        @field(resolver: "App\\GraphQL\\Mutations\\User\\UserCreate@__invoke")
-    addNewRol(input: AddNewRol!): User
-        @field(
-            resolver: "App\\GraphQL\\Mutations\\User\\NewRolMutation@__invoke"
-        )
+    @field(resolver: "App\\GraphQL\\Mutations\\User\\UserCreate@__invoke")
+    verifyEmail(codeVerification: String!): User @field(resolver:"App\\GraphQL\\Mutations\\User\\Verify\\Verify")
     login(input: Login!): LoginResponse!
-        @field(resolver: "App\\GraphQL\\Mutations\\User\\Login@__invoke")
+    @field(resolver: "App\\GraphQL\\Mutations\\User\\Login@__invoke")
 }

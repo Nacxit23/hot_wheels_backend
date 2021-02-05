@@ -48,7 +48,7 @@ class createSell
         throw_unless(
             $pay,
             UserError::class,
-            "El producto no existe."
+            "El tipo de pago no existe."
         );
 
         $sell = sells::create([
@@ -58,8 +58,6 @@ class createSell
             'user_id' => $userID,
             'detail' => $input['detail']
         ])->refresh();
-
-        logger($sell);
 
         return $sell;
     }

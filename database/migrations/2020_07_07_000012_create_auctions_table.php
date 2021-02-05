@@ -16,15 +16,13 @@ class CreateAuctionsTable extends Migration
         Schema::create('auctions', function (Blueprint $table) {
             $table->boolean('active')->default(1);
             $table->dateTime('first_dateTime');
-            $table->dateTime('last_dateTime');
-            $table->double('tire_state')->nullable();
+            $table->dateTime('last_dateTime')->nullable();
+            $table->string('auctions_state')->nullable();
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreignId('type_pay_id')->references('id')->on('type_pays')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->id();
-            $table->string('category');
             $table->string('description');
-            $table->string('name', 80);
-            $table->string('url');
             $table->text('detail')->nullable();
             $table->timestamps();
         });

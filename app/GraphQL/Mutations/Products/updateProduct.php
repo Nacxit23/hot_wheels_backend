@@ -40,6 +40,11 @@ class updateProduct
             $size = $sizeConfirm->determineSize($input['size']);
         }
 
+        $productValidate = new createProducts();
+
+        $typeCategorie = $productValidate->validateTypeCategory($input['typeCategory']);
+        $typeTire = $productValidate->validateTypeTire($input['typeTire']);
+
         $date = date("Y-m-d");
 
         $productUpdate = $product->update([
@@ -50,7 +55,10 @@ class updateProduct
             "mark" => $confirmNullAttribute['mark'],
             "name" => $confirmNullAttribute['name'],
             "typeTire" => $confirmNullAttribute['typeTire'],
-            "typeCategory" => $confirmNullAttribute['typeCategory']
+            "typeCategory" => $confirmNullAttribute['typeCategory'],
+            "type_category" => $typeCategorie,
+            "type_tire" => $typeTire,
+            "Series" => $input["Series"]
         ]);
 
         return $productUpdate;
